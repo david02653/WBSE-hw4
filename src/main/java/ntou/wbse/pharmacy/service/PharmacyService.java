@@ -23,4 +23,9 @@ public class PharmacyService {
     public ArrayList<Pharmacy> getPharmacies(){
         return null;
     }
+
+    // TODO : get single pharmacy
+    public Pharmacy getPharmacy(){
+        return null;
+    }
 }
