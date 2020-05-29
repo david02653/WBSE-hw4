@@ -2,6 +2,7 @@ package ntou.wbse.pharmacy.service;
 
 import ntou.wbse.pharmacy.entity.Pharmacy;
 import ntou.wbse.pharmacy.exception.NotFoundException;
+import ntou.wbse.pharmacy.repository.NoteRespository;
 import ntou.wbse.pharmacy.repository.PharmacyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ public class PharmacyService {
     // TODO : add Pharmacy object handle functions
 
     @Autowired
-    private PharmacyRepository repository;
+    private static PharmacyRepository repository;
+    @Autowired
+    private static NoteRespository noteRespository;
 
-    public Pharmacy getPharmacy(String id){
+    public static Pharmacy getPharmacy(String id){
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Pharmacy not found !"));
     }
 
@@ -24,8 +27,4 @@ public class PharmacyService {
         return null;
     }
 
-    // TODO : get single pharmacy
-    public Pharmacy getPharmacy(){
-        return null;
-    }
 }

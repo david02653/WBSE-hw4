@@ -34,7 +34,7 @@ public class PharmacyController {
         // two parameters , pharmacyName / zone
         // url: /pharmacy?pharmacyName=&zone=
 
-        // search in mongo
+        // call service
         // get target pharmacy data sets
         // return result data set
         return null;
@@ -42,11 +42,10 @@ public class PharmacyController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Pharmacy> getPharmacy(@PathVariable("id") String id){
-        // TODO : GET method mapping
         // return single pharmacy
         // url: /pharmacy/{id}
-        Pharmacy target;
-        return null;
+        Pharmacy target = PharmacyService.getPharmacy(id);
+        return ResponseEntity.ok(target);
     }
 
     @PostMapping
