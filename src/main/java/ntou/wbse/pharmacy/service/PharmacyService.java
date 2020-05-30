@@ -19,7 +19,8 @@ public class PharmacyService {
     private static NoteRespository noteRespository;
 
     public static Pharmacy getPharmacy(String id){
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Pharmacy not found !"));
+        //return repository.findById(id).orElseThrow(() -> new NotFoundException("Pharmacy not found !"));
+        return repository.findPharmacyById(id);
     }
 
     // TODO : service for GET multiple pharmacies

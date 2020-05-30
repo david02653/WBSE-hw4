@@ -10,4 +10,5 @@ import java.util.ArrayList;
 public interface PharmacyRepository extends MongoRepository<Pharmacy, String> {
 
     ArrayList<Pharmacy> findByIdAndIdIsNotNull(String id);
+    Pharmacy findPharmacyById(String id);
 }
