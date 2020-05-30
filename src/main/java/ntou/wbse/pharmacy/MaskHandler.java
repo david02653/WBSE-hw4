@@ -132,7 +132,6 @@ public class MaskHandler {
 					str -> str.getName().trim().contains(queryName) && str.getAddress().trim().contains(queryAddress))
 					.collect(Collectors.toList());
 		}
-
 		return matchingElements;
 	}
 
@@ -148,8 +147,10 @@ public class MaskHandler {
 
 	public void initialize() throws IOException, URISyntaxException {
 
-		String maskData = produceStringFromURL(dataURL);
-		// String maskData = produceStringFromFile(fileName);
+		//String maskData = produceStringFromURL(dataURL);
+		//String fileDataSource = produceStringFromFile(fileName);
+		//System.out.println(fileDataSource);
+		String maskData = produceStringFromFile(fileName);
 		String maskDataJson = produceDataJson(maskData);
 		pharmacyList = convertToObjects(maskDataJson);
 	}

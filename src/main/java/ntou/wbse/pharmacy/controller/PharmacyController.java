@@ -3,22 +3,19 @@ package ntou.wbse.pharmacy.controller;
 import ntou.wbse.pharmacy.entity.Note;
 import ntou.wbse.pharmacy.entity.Pharmacy;
 import ntou.wbse.pharmacy.entity.PharmacyParameter;
-import ntou.wbse.pharmacy.service.NoteService;
 import ntou.wbse.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/pharmacy")
 public class PharmacyController {
     // TODO : add pharmacy api mapping and definition
 
-    @Autowired
-    private NoteService noteService;
     @Autowired
     private PharmacyService pharmacyService;
 
@@ -28,21 +25,14 @@ public class PharmacyController {
     }
 
     @GetMapping
-    public ResponseEntity<Pharmacy> getPharmacies(@ModelAttribute PharmacyParameter param){
-        // TODO : GET method mapping
-        // return multiple pharmacies
-        // two parameters , pharmacyName / zone
+    public ResponseEntity<List<Pharmacy>> getPharmacies(@ModelAttribute PharmacyParameter param){
         // url: /pharmacy?pharmacyName=&zone=
-
-        // call service
-        // get target pharmacy data sets
-        // return result data set
-        return null;
+        List<Pharmacy> list = PharmacyService.getPharmacies(param.getPharmacyName(), param.getZone());
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Pharmacy> getPharmacy(@PathVariable("id") String id){
-        // return single pharmacy
         // url: /pharmacy/{id}
         Pharmacy target = PharmacyService.getPharmacy(id);
         return ResponseEntity.ok(target);

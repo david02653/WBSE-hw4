@@ -11,6 +11,8 @@ public class MaskHandlerTest {
 		try {
 			MaskHandler handler = new MaskHandler();
 			handler.initialize();
+			System.out.println(handler.findPharmacies("海大", ""));
+			/*
 			List<Pharmacy> filteredClinicList = handler.findPharmacies("衛生所", "基隆市中正區");
 			System.out.println(filteredClinicList);
 			List<Pharmacy> filteredClinicList2 = handler.findPharmacies("百福新豐活力", "基隆市中正區");
@@ -19,6 +21,7 @@ public class MaskHandlerTest {
 			System.out.println(filteredClinicList3);
 			List<Pharmacy> filteredClinicList4 = handler.findPharmacies("海大藥局", "");
 			System.out.println(filteredClinicList4);
+			*/
 		} catch (IOException | URISyntaxException e) {
 			// TODO Auto-generated catch block
 			System.err.println(e);

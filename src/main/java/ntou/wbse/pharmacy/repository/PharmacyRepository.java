@@ -11,4 +11,5 @@ public interface PharmacyRepository extends MongoRepository<Pharmacy, String> {
 
     ArrayList<Pharmacy> findByIdAndIdIsNotNull(String id);
     Pharmacy findPharmacyById(String id);
+    ArrayList<Pharmacy> findPharmaciesByNameContainsAndAddressContains(String name, String address);
 }
