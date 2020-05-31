@@ -1,13 +1,17 @@
 package ntou.wbse.pharmacy.controller;
 
 import ntou.wbse.pharmacy.entity.Note;
+import ntou.wbse.pharmacy.entity.NoteRequest;
 import ntou.wbse.pharmacy.entity.Pharmacy;
 import ntou.wbse.pharmacy.entity.PharmacyParameter;
 import ntou.wbse.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,28 +42,28 @@ public class PharmacyController {
         return ResponseEntity.ok(target);
     }
 
-    @PostMapping
-    public ResponseEntity<Pharmacy> addNote(){
-        // TODO : POST method mapping
+    @PostMapping(value = "/{pharmacyId}/note")
+    public ResponseEntity<Note> addNote(@PathVariable("pharmacyId") String pharmacyId, @RequestBody String request){
         // url: /pharmacy/{id}/note
-        return null;
+        Note note = pharmacyService.createNote(pharmacyId, request);
+        //redirect to result page
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{pharmacyId}").buildAndExpand(pharmacyId).toUri();
+        return ResponseEntity.created(location).body(note);
     }
 
-    @PutMapping(value = "/{id}/note")
-    public ResponseEntity<Pharmacy> replaceNote(@PathVariable("id") String id, @RequestBody Note note){
-        // TODO : PUT method mapping
+    @PutMapping(value = "/{pharmacyId}/note")
+    public ResponseEntity<Note> replaceNote(@PathVariable("pharmacyId") String pharmacyId, @RequestBody String msg){
         // replace pharmacy note
-        // url: /pharmacy/{id}/note
-
-
-        return null;
+        // url: /pharmacy/{PharmacyId}/note
+        Note note = pharmacyService.replaceNote(pharmacyId, msg);
+        return ResponseEntity.ok(note);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Pharmacy> removeNote(){
-        // TODO : DELETE method mapping
+    @DeleteMapping(value = "/{pharmacyId}/note")
+    public ResponseEntity<Note> removeNote(@PathVariable("pharmacyId") String pharmacyId){
         // remove pharmacy note
         // url: /pharmacy/{id}/note
-        return null;
+        pharmacyService.removeNote(pharmacyId);
+        return ResponseEntity.noContent().build();
     }
 }
