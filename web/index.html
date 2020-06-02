@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pharmacy Search</title>
+</head>
+<style>
+    body {
+        background-color:darkgrey;
+    }
+    .header {
+        text-align: center;
+        background-color: goldenrod;
+        color: white;
+        font-size: 30px;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+    .item {
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .field {
+        background-color:darkgray;
+        text-align: center;
+        flex-direction: row;
+        display: flex;
+
+    }
+    .disp {
+        background-color: darkorange;
+        flex-grow: 6;
+        flex-shrink: 1;
+    }
+    .panel {
+        background-color: violet;
+        flex-direction: column;
+        display: flex;
+        flex-grow: 4;
+    }
+    .srh {
+        background-color: aquamarine;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+    .inp {
+        background-color:crimson;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>header</h2>
+            <p>my header</p>
+        </div>
+        <div class="field">
+            <div class="disp">
+                data display
+            </div>
+
+            <div class="panel">
+                <div class="srh">
+                    search panel
+                </div>
+                <div class="inp">
+                    input panel
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
