@@ -12,7 +12,8 @@
         text-align: center;
         background-color: goldenrod;
         color: white;
-        font-size: 30px;
+        font-size: 20px;
+        padding: 5px;
     }
     .container {
         display: flex;
@@ -27,47 +28,132 @@
         text-align: center;
         flex-direction: row;
         display: flex;
-
+        padding-top: 10px;
     }
     .disp {
         background-color: darkorange;
         flex-grow: 6;
         flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     .panel {
         background-color: violet;
         flex-direction: column;
         display: flex;
         flex-grow: 4;
+        padding-left: 5px;
     }
     .srh {
         background-color: aquamarine;
-        flex-grow: 1;
+        flex-grow: 4;
         flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     .inp {
         background-color:crimson;
-        flex-grow: 1;
+        flex-grow: 6;
         flex-shrink: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .dtable {
+        width: 100%;
+        height: 100%;
+    }
+    tr {
+        margin: 7px;
+        width: 100%;
+        text-align: left;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        width: 50%;
+    }
+    table {
+        padding: 7px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    input {
+        margin: 4px;
     }
 </style>
 <body>
+    <script>
+        let t = 1;
+        `${t}`
+        let urlBase = "http://localhost:8888/pharamcy";
+        let getUrl = urlBase + `?pharmacyName=${document.getElementById("pharmacyName").value}&zone=${document.getElementById("address").value}`;
+        function getAllData(getUrl) {
+            fetch(getUrl).then(res=>res.json()).then(res=>(
+                function dosomething(){}
+            ))
+        }
+    </script>
     <div class="container">
         <div class="header">
-            <h2>header</h2>
-            <p>my header</p>
+            <h2>Mask Search</h2>
+            <p>help you to locate which pharmacy got masks</p>
         </div>
         <div class="field">
             <div class="disp">
-                data display
+                <table class="dtable">
+                    <tr>
+                        <td>id</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>address</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>phone</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>numberOfAdultMasks</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>numberOfChildrenMasks</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>updataTime</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>note</td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
 
             <div class="panel">
                 <div class="srh">
-                    search panel
+                    PharmacyName:
+                    <input type="text" id="pharmacyName">
+                    Address:
+                    <input type="text" id="address">
+                    
+                    <input id="search" type="button" value="Search">
                 </div>
                 <div class="inp">
-                    input panel
+                    Add Note:
+                    <input type="text" id="noteArea">
+                    <input id="addNote" type="button" value="Add">
                 </div>
             </div>
         </div>
