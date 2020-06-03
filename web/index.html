@@ -44,6 +44,7 @@
         display: flex;
         flex-grow: 4;
         padding-left: 5px;
+        height: 40%;
     }
     .srh {
         background-color: aquamarine;
@@ -60,10 +61,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-    }
-    .dtable {
-        width: 100%;
-        height: 100%;
     }
     tr {
         margin: 7px;
@@ -87,25 +84,19 @@
     }
 </style>
 <body>
-    <script>
-        let t = 1;
-        `${t}`
-        let urlBase = "http://localhost:8888/pharamcy";
-        let getUrl = urlBase + `?pharmacyName=${document.getElementById("pharmacyName").value}&zone=${document.getElementById("address").value}`;
-        function getAllData(getUrl) {
-            fetch(getUrl).then(res=>res.json()).then(res=>(
-                function dosomething(){}
-            ))
-        }
-    </script>
     <div class="container">
         <div class="header">
             <h2>Mask Search</h2>
             <p>help you to locate which pharmacy got masks</p>
         </div>
         <div class="field">
-            <div class="disp">
-                <table class="dtable">
+            <div class="disp" id="displayTable">
+                <table>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            data table
+                        </td>
+                    </tr>
                     <tr>
                         <td>id</td>
                         <td></td>
@@ -143,20 +134,102 @@
 
             <div class="panel">
                 <div class="srh">
-                    PharmacyName:
-                    <input type="text" id="pharmacyName">
+                    Pharmacy name:
+                    <input type="text" id="pharmacyName" value="大同">
                     Address:
-                    <input type="text" id="address">
+                    <input type="text" id="address" value="">
                     
                     <input id="search" type="button" value="Search">
                 </div>
                 <div class="inp">
+                    Pharmacy id:
+                    <input type="text" id="pharmacyId" value="">
                     Add Note:
-                    <input type="text" id="noteArea">
+                    <input type="text" id="noteArea" value="">
                     <input id="addNote" type="button" value="Add">
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    let urlBase = "http://localhost:8888/pharmacy";
+    let getUrl = urlBase + `?pharmacyName=`
+                         + `${document.getElementById("pharmacyName").value}`
+                         + `&zone=`
+                         + `${document.getElementById("address").value}`;
+
+    //let getUrl = urlBase + `?pharmacyName=` + pharmacyKey + `&zone=` + zone;
+    function getAllData() {
+        console.log(getUrl);
+        //console.log(`${document.getElementById("address").value}`)
+        
+        fetch(getUrl, {method: 'GET', headers: {
+            'Content-Type': 'application/json'
+        }})
+        .then(function(res){
+            return res.json();
+        }).then(function(res){
+            console.log("run inner");
+            console.log(res);
+        })
+        /*
+        fetch(getUrl, {mode: 'no-cors'}).then(res=>res.json()).then(res=>(
+            function(res){
+                console.log("run function");
+                console.log(res);
+                /*
+                // add all data set into data display table
+                let place = document.getElementById("displayTable");
+                place.appendChild(`<table>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        ` + res + `
+                    </td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>address</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>phone</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>numberOfAdultMasks</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>numberOfChildrenMasks</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>updataTime</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>note</td>
+                    <td></td>
+                </tr>
+            </table>`);
+            
+            }
+        ));
+        */
+    }
+
+    function clearDisplayTable(){
+        document.getElementById("displayTable").innerHTML = "";
+    }
+
+    document.getElementById("search").addEventListener("click", getAllData);
+</script>
 </html>

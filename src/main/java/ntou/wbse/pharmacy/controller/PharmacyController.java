@@ -18,15 +18,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/pharmacy")
 public class PharmacyController {
-    // TODO : add pharmacy api mapping and definition
 
     @Autowired
     private PharmacyService pharmacyService;
-
-    @GetMapping(value = "/hello")
-    public String TryToRun(){
-        return "hello spring boot";
-    }
 
     @GetMapping
     public ResponseEntity<List<Pharmacy>> getPharmacies(@ModelAttribute PharmacyParameter param){
