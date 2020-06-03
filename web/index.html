@@ -31,7 +31,7 @@
         padding-top: 10px;
     }
     .disp {
-        background-color: darkorange;
+        background-color:seagreen;
         flex-grow: 6;
         flex-shrink: 1;
         display: flex;
@@ -135,7 +135,7 @@
             <div class="panel">
                 <div class="srh">
                     Pharmacy name:
-                    <input type="text" id="pharmacyName" value="大同">
+                    <input type="text" id="pharmacyName" value="">
                     Address:
                     <input type="text" id="address" value="">
                     
@@ -154,82 +154,80 @@
 </body>
 <script>
     let urlBase = "http://localhost:8888/pharmacy";
-    let getUrl = urlBase + `?pharmacyName=`
+    let myUrl = urlBase + `?pharmacyName=`
                          + `${document.getElementById("pharmacyName").value}`
                          + `&zone=`
                          + `${document.getElementById("address").value}`;
+    
+    function getUrl(){
+        return urlBase + `?pharmacyName=`
+                         + `${document.getElementById("pharmacyName").value}`
+                         + `&zone=`
+                         + `${document.getElementById("address").value}`;
+    }
 
     //let getUrl = urlBase + `?pharmacyName=` + pharmacyKey + `&zone=` + zone;
     function getAllData() {
-        console.log(getUrl);
+        console.log(getUrl());
         //console.log(`${document.getElementById("address").value}`)
+
         
-        fetch(getUrl, {method: 'GET', headers: {
+        fetch(getUrl(), {method: 'GET', headers: {
             'Content-Type': 'application/json'
         }})
         .then(function(res){
             return res.json();
         }).then(function(res){
             console.log(res);
-            
-        })
-        /*
-        fetch(getUrl, {mode: 'no-cors'}).then(res=>res.json()).then(res=>(
-            function(res){
-                console.log("run function");
-                console.log(res);
-                /*
-                // add all data set into data display table
-                let place = document.getElementById("displayTable");
-                place.appendChild(`<table>
+            let place = document.getElementById("displayTable");
+            place.innerHTML = "";
+            for(var obj in res){
+                console.log(obj); // json object count
+                //console.table(res[obj]); // each json object
+                place.innerHTML += `<table>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        ` + res + `
+                        ` + res[obj].id + `
                     </td>
                 </tr>
                 <tr>
                     <td>id</td>
-                    <td></td>
+                    <td>` + res[obj].id + `</td>
                 </tr>
                 <tr>
                     <td>name</td>
-                    <td></td>
+                    <td>` + res[obj].name + `</td>
                 </tr>
                 <tr>
                     <td>address</td>
-                    <td></td>
+                    <td>` + res[obj].address + `</td>
                 </tr>
                 <tr>
                     <td>phone</td>
-                    <td></td>
+                    <td>` + res[obj].phone + `</td>
                 </tr>
                 <tr>
                     <td>numberOfAdultMasks</td>
-                    <td></td>
+                    <td>` + res[obj].numberOfAdultMasks + `</td>
                 </tr>
                 <tr>
                     <td>numberOfChildrenMasks</td>
-                    <td></td>
+                    <td>` + res[obj].numberOfChildrenMasks + `</td>
                 </tr>
                 <tr>
                     <td>updataTime</td>
-                    <td></td>
+                    <td>` + res[obj].updatedTime + `</td>
                 </tr>
                 <tr>
                     <td>note</td>
-                    <td></td>
+                    <td>` + res[obj].note + `</td>
                 </tr>
-            </table>`);
-            
+            </table>`;
             }
-        ));
-        */
+        })
+        
+        
     }
-
-    function clearDisplayTable(){
-        document.getElementById("displayTable").innerHTML = "";
-    }
-
     document.getElementById("search").addEventListener("click", getAllData);
 </script>
 </html>
