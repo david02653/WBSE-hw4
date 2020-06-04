@@ -32,7 +32,7 @@
     }
     .disp {
         background-color:seagreen;
-        flex-grow: 6;
+        flex-grow: 7;
         flex-shrink: 1;
         display: flex;
         flex-direction: column;
@@ -42,7 +42,7 @@
         background-color: violet;
         flex-direction: column;
         display: flex;
-        flex-grow: 4;
+        flex-grow: 3;
         padding-left: 5px;
         height: 40%;
     }
@@ -144,8 +144,11 @@
                 <div class="inp">
                     Input Your Note:
                     <input type="text" id="noteArea" value="" placeholder="Write your note here">
-                    <input id="search" type="button" value="Search By name/address/id">
+                    <input id="search" type="button" value="Search By name and address">
+                    <input id="searchId" type="button" value="Search By pharmacy id">
                     <input id="addNote" type="button" value="Add Note to pharmacy">
+                    <input id="updateNote" type="button" value="Update pharmacy note">
+                    <input id="removeNote" type="button" value="Remove pharmacy note">
                 </div>
             </div>
         </div>
@@ -164,8 +167,187 @@
                          + `&zone=`
                          + `${document.getElementById("address").value}`;
     }
+    function clearUp(){
+        document.getElementById("noteArea").value = "";
+        document.getElementById("pharmacyId").value = "";
+        document.getElementById("pharmacyName").value = "";
+        document.getElementById("address").value = "";
+    }
+    function findById(){
+        let id = `${document.getElementById("pharmacyId").value}`;
+        if(!id){
+            window.alert("please input pharmacy id !");
+            return;
+        }else console.log("your id is " + id);
+        let url = urlBase + `/` + id; // request url for GET single pharmacy
+        console.log(url);
+        
+        fetch(url, {method: 'GET', headers: {
+            'Content-Type': 'application/json'
+        }})
+        .then(function(res){
+            return res.json();
+        }).then(function(res){
+            console.table(res);
+            let place = document.getElementById("displayTable");
+            place.innerHTML = `<table>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        ` + res.id + `
+                    </td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>` + res.id + `</td>
+                </tr>
+                <tr>
+                    <td>name</td>
+                    <td>` + res.name + `</td>
+                </tr>
+                <tr>
+                    <td>address</td>
+                    <td>` + res.address + `</td>
+                </tr>
+                <tr>
+                    <td>phone</td>
+                    <td>` + res.phone + `</td>
+                </tr>
+                <tr>
+                    <td>numberOfAdultMasks</td>
+                    <td>` + res.numberOfAdultMasks + `</td>
+                </tr>
+                <tr>
+                    <td>numberOfChildrenMasks</td>
+                    <td>` + res.numberOfChildrenMasks + `</td>
+                </tr>
+                <tr>
+                    <td>updataTime</td>
+                    <td>` + res.updatedTime + `</td>
+                </tr>
+                <tr>
+                    <td>note</td>
+                    <td>` + res.note + `</td>
+                </tr>
+            </table>`;
+        })
+        clearUp();
+    }
+    function addNote(){
+        let id = `${document.getElementById("pharmacyId").value}`;
+        if(!id){
+            window.alert("please input pharmacy id !");
+            return;
+        }else console.log("your id is " + id);
+        let url = urlBase + `/` + id + `/note/`; // request url for POST add pharmacy note
+        console.log(url);
+        let note = `${document.getElementById("noteArea").value}`;
+        if(!note){
+            window.alert("please input your pharmacy note !");
+            return;
+        }
+        console.log(note);
 
-    //let getUrl = urlBase + `?pharmacyName=` + pharmacyKey + `&zone=` + zone;
+        fetch(url, {method: 'POST', headers: {
+            'Content-Type': 'application/json'
+            //'Content-Type': 'text/plain'
+        }, body: note})
+        .then(function(res){
+            return res.json();
+        }).then(function(res){
+            console.table(res);
+            let place = document.getElementById("displayTable");
+            place.innerHTML = `<table>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        SUCCESS !
+                    </td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>` + res.id + `</td>
+                </tr>
+                <tr>
+                    <td>pharmacyId</td>
+                    <td>` + res.pharmacyId + `</td>
+                </tr>
+                <tr>
+                    <td>note</td>
+                    <td>` + res.note + `</td>
+                </tr>
+            </table>`;
+        })
+        clearUp();
+    }
+    function updateNote(){
+        let id = `${document.getElementById("pharmacyId").value}`;
+        if(!id){
+            window.alert("please input pharmacy id !");
+            return;
+        }else console.log("your id is " + id);
+        let url = urlBase + `/` + id + `/note/`; // request url for PUT update pharmacy note
+        console.log(url);
+        let note = `${document.getElementById("noteArea").value}`;
+        if(!note){
+            window.alert("please input your pharmacy note !");
+            return;
+        }
+        console.log(note);
+
+        fetch(url, {method: 'PUT', headers: {
+            'Content-Type': 'application/json'
+            //'Content-Type': 'text/plain'
+        }, body: note})
+        .then(function(res){
+            if(res.ok) return res.json();
+            else{
+                document.getElementById("displayTable").innerHTML = "OPERATION FAILED";
+                throw new Error('NetWork response was not ok.')
+            }
+        }).then(function(res){
+            console.table(res);
+            let place = document.getElementById("displayTable");
+            place.innerHTML = `<table>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        SUCCESS !
+                    </td>
+                </tr>
+                <tr>
+                    <td>id</td>
+                    <td>` + res.id + `</td>
+                </tr>
+                <tr>
+                    <td>pharmacyId</td>
+                    <td>` + res.pharmacyId + `</td>
+                </tr>
+                <tr>
+                    <td>note</td>
+                    <td>` + res.note + `</td>
+                </tr>
+            </table>`;
+        })
+        .catch(function(error){
+            console.log("operation failed when updating pharmacy note.")
+        })
+        clearUp();
+    }
+    function removeNote(){
+        let id = `${document.getElementById("pharmacyId").value}`;
+        if(!id){
+            window.alert("please input pharmacy id !");
+            return;
+        }else console.log("your id is " + id);
+        let url = urlBase + `/` + id + `/note/`; // request url for DELETE remove pharmacy note
+        console.log(url);
+
+        fetch(url, {method: 'DELETE'
+        })
+        .then(function(){
+            console.log("note remove success")
+            document.getElementById("displayTable").innerHTML = "Note Remove Success";
+        })
+        clearUp();
+    }
     function getAllData() {
         console.log(getUrl());
         //console.log(`${document.getElementById("address").value}`)
@@ -224,9 +406,12 @@
             </table>`;
             }
         })
-        
-        
+        clearUp();
     }
     document.getElementById("search").addEventListener("click", getAllData);
+    document.getElementById("searchId").addEventListener("click", findById);
+    document.getElementById("addNote").addEventListener("click", addNote);
+    document.getElementById("updateNote").addEventListener("click", updateNote);
+    document.getElementById("removeNote").addEventListener("click", removeNote);
 </script>
 </html>
