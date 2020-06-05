@@ -155,7 +155,8 @@
     </div>
 </body>
 <script>
-    let urlBase = "http://localhost:8888/pharmacy";
+    //let urlBase = "http://localhost:8080/pharmacy/pharmacy";
+    let urlBase = window.location.origin + `/pharmacy/pharmacy`; // url for tomcat prefix
     let myUrl = urlBase + `?pharmacyName=`
                          + `${document.getElementById("pharmacyName").value}`
                          + `&zone=`

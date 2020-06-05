@@ -98,7 +98,7 @@ public class MaskHandler {
 			jsonGenerator.writeEndArray();
 		}
 
-		return output.toString();
+		return output.toString(StandardCharsets.UTF_8);
 	}
 
 	public List<Pharmacy> convertToObjects(String jsonData) {
@@ -147,10 +147,10 @@ public class MaskHandler {
 
 	public void initialize() throws IOException, URISyntaxException {
 
-		//String maskData = produceStringFromURL(dataURL);
+		String maskData = produceStringFromURL(dataURL);
 		//String fileDataSource = produceStringFromFile(fileName);
 		//System.out.println(fileDataSource);
-		String maskData = produceStringFromFile(fileName);
+		//String maskData = produceStringFromFile(fileName);
 		String maskDataJson = produceDataJson(maskData);
 		pharmacyList = convertToObjects(maskDataJson);
 	}
