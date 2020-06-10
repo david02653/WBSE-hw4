@@ -156,8 +156,8 @@
 </body>
 <script>
     //let urlBase = "http://localhost:8080/pharmacy"; // url for intellij testing
-    let urlBase = window.location.origin + `/pharmacy`; // url for intellij testing, using window.location.origin
-    //let urlBase = window.location.origin + `/pharmacy/pharmacy`; // url for tomcat prefix
+    //let urlBase = window.location.origin + `/pharmacy`; // url for intellij testing, using window.location.origin
+    let urlBase = window.location.origin + `/pharmacy/pharmacy`; // url for tomcat prefix
     let myUrl = urlBase + `?pharmacyName=`
                          + `${document.getElementById("pharmacyName").value}`
                          + `&zone=`
